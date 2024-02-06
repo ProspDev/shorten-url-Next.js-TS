@@ -1,19 +1,27 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
+// api utils
+import { generateUniqueId } from "pages/api/utils/functions";
+import redis from "pages/api/utils/redis";
 
 type Data = {
   data: any;
 };
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  if (req.method === "GET") {
-    res.status(200).json({ data: { greeting: "Hello Shorten-URL!" } });
-  } else if (req.method === "POST") {
-    res.status(200).json({ data: { message: req.body } });
-  } else {
-    res.status(405).end(); // Method Not Allowed
+  try {
+    if (req.method === "POST") {
+      const { url } = req.body;
+      const uniqueId = generateUniqueId();
+
+      await redis.set(uniqueId, url, { ex: 30 * 60 });
+      res.status(201).json({ data: { id: uniqueId, url } });
+    } else {
+      res.status(405).end(); // Method Not Allowed
+    }
+  } catch (err) {
+    console.log(err);
   }
 }
