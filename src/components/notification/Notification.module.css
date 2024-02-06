@@ -1,0 +1,87 @@
+@keyframes opening {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.notificationWrapper {
+  display: flex;
+  transition: all 0.5s;
+  margin-top: 10px;
+  position: relative;
+  padding: 16px;
+  align-items: center;
+  color: white;
+  justify-content: space-between;
+  min-width: 350px;
+  max-width: 95vw;
+  border-radius: 6px;
+}
+
+.notificationWrapper.visible {
+  animation: opening 0.5s;
+}
+.notificationWrapper.invisible {
+  opacity: 0;
+}
+
+.notificationWrapper .close {
+  cursor: pointer;
+}
+
+.iconWrapper {
+  background: url(/icons/icon-check-black-circle.svg) no-repeat center;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  margin-right: 10px;
+}
+
+.contentWrapper {
+  font-size: 14px;
+  line-height: 20px;
+  margin-right: 10px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.contentWrapper::before {
+  content: "";
+  display: inline-block;
+  width: 18px;
+  min-width: 18px;
+  height: 18px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.notificationWrapper.success {
+  background-color: #3ea82e;
+}
+.notificationWrapper.error {
+  background-color: #db3d5e;
+}
+.notificationWrapper.warning {
+  background-color: #dba50c;
+}
+.notificationWrapper.info {
+  background-color: #0e6ddb;
+}
+
+.notificationWrapper.success .contentWrapper::before {
+  background-image: url(/icons/icon_check_success_white.svg);
+}
+.notificationWrapper.error .contentWrapper::before {
+  background-image: url(/icons/icon_check_error_white.svg);
+}
+.notificationWrapper.warning .contentWrapper::before {
+  background-image: url(/icons/icon_check_warning_white.svg);
+}
+.notificationWrapper.info .contentWrapper::before {
+  background-image: url(/icons/icon_check_information_white.svg);
+}
