@@ -31,7 +31,7 @@ export default function ShortenItem({ item }: Props) {
       </p>
       <div className="mt-2 flex justify-between gap-4">
         <Link
-          className="text-blue-500 w-1/5 whitespace-nowrap overflow-hidden text-ellipsis cursor-pointer"
+          className="text-blue-500 w-3/5 whitespace-nowrap overflow-hidden text-ellipsis cursor-pointer"
           href={`/${item.id}`}
           target="_blank"
         >
