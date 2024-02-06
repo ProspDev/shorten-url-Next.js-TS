@@ -24,7 +24,7 @@ export default function ShortenItem({ item }: Props) {
   return (
     <div className="my-2 p-3 rounded border border-green-400 bg-white text-black">
       <p
-        className="w-3/5 whitespace-nowrap overflow-hidden text-ellipsis"
+        className="whitespace-nowrap overflow-hidden text-ellipsis"
         title={item.url}
       >
         {item.url}
@@ -35,7 +35,7 @@ export default function ShortenItem({ item }: Props) {
           href={`/${item.id}`}
           target="_blank"
         >
-          {process.env.SITE_URL || "example.com"}/{item.id}
+          {process.env.SITE_URL || "domainname.com"}/{item.id}
         </Link>
         <Button
           kind={KIND.tertiary}
