@@ -19,6 +19,7 @@ export default async function handler(
       if (!url) {
         throw new Error("Id expired or invalid id");
       }
+      // reset expire time
       await redis.set(id as string, url, { ex: 30 * 60 });
 
       res.status(201).json({ data: { url } });
