@@ -1,53 +1,41 @@
 import { useEffect, useState } from "react";
-// baseUI
-import { Input } from "baseui/input";
-import { Button } from "baseui/button";
-// components
-import notify from "components/notification/Notification";
-// utils
-import http from "utils/http";
+// lodash
+import _ from "lodash";
+//
+import ShortenURLForm from "./ShortenURLForm";
+import ShortenItem from "./ShortenItem";
 
 export default function HomeView() {
-  const [url, setUrl] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [shortedUrls, setShortedUrls] = useState<any[]>([]);
 
-  const getGreeting = async () => {
-    try {
-      const response = await http.get("api/v1/shorten");
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-    }
+  const getShortedUrlsFromLocal = () => {
+    const json = localStorage.getItem("shortenUrlList") || "[]";
+    setShortedUrls(JSON.parse(json));
   };
+
   useEffect(() => {
-    getGreeting();
+    getShortedUrlsFromLocal();
   }, []);
-
-  const onSubmit = async () => {
-    setIsLoading(true);
-    try {
-      const response = await http.post("api/v1/shorten", {
-        url,
-      });
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-      notify({ text: "Something went wrong", notificationType: "error" });
-    }
-    setIsLoading(false);
-  };
 
   return (
     <div>
-      <p className="text-center">Hello URL Shortener</p>
-      <Input
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
-        autoComplete="off"
-      />
-      <Button onClick={onSubmit} isLoading={isLoading}>
-        Submit
-      </Button>
+      <div className="w-[768px] mx-auto my-20">
+        <p className="text-4xl font-bold">Create branded and safe short URLs</p>
+        <p className="mt-3">
+          URL shortener is the fastest, easiest way to brand, track, and share
+          short URLs using a custom domain name.
+        </p>
+      </div>
+      <div className="bg-dark text-white min-h-[500px] p-10">
+        <div className="w-[768px] mx-auto">
+          <ShortenURLForm refresh={getShortedUrlsFromLocal} />
+          <div className="mt-5">
+            {_.reverse([...shortedUrls]).map((item, index) => (
+              <ShortenItem key={index} item={item} />
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

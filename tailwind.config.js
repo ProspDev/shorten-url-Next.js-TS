@@ -19,7 +19,7 @@ module.exports = {
         sans: ["", ...defaultTheme.fontFamily.sans], // default font style
       },
       colors: {
-        dark: "#1e1e1e",
+        dark: "#263849",
       },
     },
   },

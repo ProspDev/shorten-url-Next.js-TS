@@ -8,6 +8,8 @@ const nextConfig = {
   },
   env: {
     CURRENT_ENV: process.env.CURRENT_ENV,
+    UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
+    SITE_URL: process.env.SITE_URL,
   },
 };
 
