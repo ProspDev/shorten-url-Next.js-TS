@@ -1,17 +1,27 @@
-import { ShortenUrl } from "types/shortenUrl";
+import { useState, useEffect } from "react";
+import _ from "lodash";
+// baseUI
 import { Button, KIND, SIZE } from "baseui/button";
 // next
 import Link from "next/link";
+// iconify
+import { Icon } from "@iconify/react";
+// types
+import { ShortenUrl } from "types/shortenUrl";
 // components
 import notify from "components/notification/Notification";
 
 type Props = {
   item: ShortenUrl;
+  refresh: () => void;
 };
 
-export default function ShortenItem({ item }: Props) {
+export default function ShortenItem({ item, refresh }: Props) {
+  const [isCopied, setIsCopied] = useState(false);
+
   const copyToClipboard = async (text: string) => {
     if (navigator.clipboard) {
+      setIsCopied(true);
       try {
         await navigator.clipboard.writeText(text);
         notify({ text: "Link copied", notificationType: "success" });
@@ -19,6 +29,27 @@ export default function ShortenItem({ item }: Props) {
         console.error("Failed to copy text: ", err);
       }
     }
+  };
+
+  useEffect(() => {
+    if (isCopied) {
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 500);
+    }
+  }, [isCopied]);
+
+  const handleRemove = () => {
+    const shortedUrlListJson = localStorage.getItem("shortenUrlList") || "[]";
+    const shortedUrlList = JSON.parse(shortedUrlListJson);
+    const listObject = _.mapKeys(shortedUrlList, "id");
+    delete listObject[item.id];
+    localStorage.setItem(
+      "shortenUrlList",
+      JSON.stringify(_.values(listObject))
+    );
+
+    refresh();
   };
 
   return (
@@ -37,13 +68,25 @@ export default function ShortenItem({ item }: Props) {
         >
           {process.env.SITE_URL || "domainname.com"}/{item.id}
         </Link>
-        <Button
-          kind={KIND.tertiary}
-          size={SIZE.mini}
-          onClick={() => copyToClipboard(`${process.env.SITE_URL}/${item.id}`)}
-        >
-          COPY
-        </Button>
+        <div>
+          <Button
+            kind={KIND.tertiary}
+            size={SIZE.mini}
+            onClick={() =>
+              copyToClipboard(`${process.env.SITE_URL}/${item.id}`)
+            }
+          >
+            <Icon
+              icon={
+                isCopied ? "fluent:copy-24-filled" : "fluent:copy-24-regular"
+              }
+              fontSize={25}
+            />
+          </Button>
+          <Button kind={KIND.tertiary} size={SIZE.mini} onClick={handleRemove}>
+            <Icon icon="fluent:delete-28-regular" fontSize={25} />
+          </Button>
+        </div>
       </div>
     </div>
   );

@@ -28,7 +28,7 @@ const notify = ({
         </div>
       </div>
     ),
-    { id: "unique-notification", position: "top-right", duration: 5000 }
+    { id: "unique-notification", position: "top-right", duration: 3000 }
   );
 
 export default notify;
