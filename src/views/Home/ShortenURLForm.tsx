@@ -50,6 +50,7 @@ export default function ShortenURLForm({ refresh }: Props) {
           text: "URL Shortened successfully",
           notificationType: "success",
         });
+        resetForm();
       } catch (error) {
         setSubmitting(false);
         console.log(error);
@@ -58,7 +59,14 @@ export default function ShortenURLForm({ refresh }: Props) {
     },
   });
 
-  const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
+  const {
+    errors,
+    touched,
+    isSubmitting,
+    handleSubmit,
+    getFieldProps,
+    resetForm,
+  } = formik;
 
   return (
     <FormikProvider value={formik}>
