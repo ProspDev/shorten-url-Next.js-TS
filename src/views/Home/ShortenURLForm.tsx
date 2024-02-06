@@ -69,6 +69,7 @@ export default function ShortenURLForm({ refresh }: Props) {
               {...getFieldProps("url")}
               autoComplete="off"
               error={Boolean(touched.url && errors.url)}
+              clearable
             />
             {Boolean(touched.url && errors.url) && (
               <ParagraghError text={errors.url} />
