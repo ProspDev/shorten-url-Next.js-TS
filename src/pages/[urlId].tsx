@@ -27,6 +27,10 @@ const Home: NextPage = () => {
       }
     } catch (err) {
       console.log(err);
+      notify({
+        text: JSON.stringify(err),
+        notificationType: "error",
+      });
     }
   };
 
