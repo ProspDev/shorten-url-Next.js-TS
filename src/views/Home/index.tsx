@@ -31,7 +31,11 @@ export default function HomeView() {
           <ShortenURLForm refresh={getShortedUrlsFromLocal} />
           <div className="mt-5">
             {_.reverse([...shortedUrls]).map((item, index) => (
-              <ShortenItem key={index} item={item} />
+              <ShortenItem
+                key={index}
+                item={item}
+                refresh={getShortedUrlsFromLocal}
+              />
             ))}
           </div>
         </div>

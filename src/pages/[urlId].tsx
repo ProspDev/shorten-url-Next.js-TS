@@ -31,6 +31,7 @@ const Home: NextPage = () => {
         text: JSON.stringify(err),
         notificationType: "error",
       });
+      router.push("/");
     }
   };
 
@@ -41,7 +42,7 @@ const Home: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlId]);
 
-  return <div />;
+  return <div className="w-screen h-screen bg-black" />;
 };
 
 export default Home;
