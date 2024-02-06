@@ -12,9 +12,3 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield; /* Firefox */
 }
-
-.ql-container {
-  min-height: 150px;
-  max-height: 300px;
-  overflow-y: auto;
-}
