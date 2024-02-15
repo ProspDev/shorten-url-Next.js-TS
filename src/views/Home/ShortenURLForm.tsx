@@ -2,11 +2,10 @@
 import { useFormik, Form, FormikProvider } from "formik";
 import * as Yup from "yup";
 // baseUI
-import { Input } from "baseui/input";
 import { Button, KIND } from "baseui/button";
 // components
 import notify from "components/notification/Notification";
-import ParagraghError from "components/typography/PragraphError";
+import TextField from "components/form/TextField";
 // utils
 import http from "utils/http";
 import { SHORTEN_URL } from "utils/apiEndpoints";
@@ -73,15 +72,12 @@ export default function ShortenURLForm({ refresh }: Props) {
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <div className="grid grid-cols-5 gap-4">
           <div className="col-span-4">
-            <Input
+            <TextField
               {...getFieldProps("url")}
-              autoComplete="off"
-              error={Boolean(touched.url && errors.url)}
-              clearable
+              placeholder="Enter URL"
+              isError={Boolean(touched.url && errors.url)}
+              helperText={errors.url}
             />
-            {Boolean(touched.url && errors.url) && (
-              <ParagraghError text={errors.url} />
-            )}
           </div>
           <div>
             <Button
